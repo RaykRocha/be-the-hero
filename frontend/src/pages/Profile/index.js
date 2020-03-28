@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles.css';
 import logoImg from '../../assets/logo.svg';
 import { Link } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi';
+import api from '../../services/api';
 
 export default function Profile() {
+    const ongName = localStorage.getItem('ongName');
+
+    useEffect(() => { });
+
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Be The Hero" />
-                <span>Bem vinda, APAD</span>
+                <span>Bem vinda, {ongName}</span>
                 <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
                 <button type="button">
                     <FiPower size={18} color="#e02041" />
@@ -27,7 +32,7 @@ export default function Profile() {
                     <p>R$ 120,00</p>
 
                     <button type="button">
-                        <FiTrash2 size={20} color="#a8a8b3"/>
+                        <FiTrash2 size={20} color="#a8a8b3" />
                     </button>
                 </li>
                 <li>
@@ -39,7 +44,7 @@ export default function Profile() {
                     <p>R$ 120,00</p>
 
                     <button type="button">
-                        <FiTrash2 size={20} color="#a8a8b3"/>
+                        <FiTrash2 size={20} color="#a8a8b3" />
                     </button>
                 </li>
                 <li>
@@ -51,7 +56,7 @@ export default function Profile() {
                     <p>R$ 120,00</p>
 
                     <button type="button">
-                        <FiTrash2 size={20} color="#a8a8b3"/>
+                        <FiTrash2 size={20} color="#a8a8b3" />
                     </button>
                 </li>
                 <li>
@@ -63,7 +68,7 @@ export default function Profile() {
                     <p>R$ 120,00</p>
 
                     <button type="button">
-                        <FiTrash2 size={20} color="#a8a8b3"/>
+                        <FiTrash2 size={20} color="#a8a8b3" />
                     </button>
                 </li>
             </ul>
