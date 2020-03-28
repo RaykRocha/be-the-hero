@@ -1,13 +1,16 @@
 const express = require('express');
+const crypto = require('crypto');
 const routes = express.Router();
 
-routes.post('/users', (request, response) => {
-    const params = request.body;
+routes.post('/ongs', (request, response) => {
+    const { name, email, whatsapp, cidade, uf } = request.body;
 
-    console.log(params);
-    return response.json({
-        teste: 'Olá Mundo'
-    });
+    const id = crypto.randomBytes(4).toString('HEX');
+
+    
+
+    console.log(data);
+    return response.json({});
 })
 
 module.exports = routes;
