@@ -2,16 +2,26 @@ import React from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, Text, Image, TouchableOpacity, Linking } from 'react-native';
-import styles from './styles';
-import logoImg from '../../assets/logo.png';
 import * as MailComposer from 'expo-mail-composer';
+
+import logoImg from '../../assets/logo.png';
+
+import styles from './styles';
 
 export default function Detail() {
   const navigation = useNavigation();
+  const route = useRoute();
 
-  const message = `Olá apad
-    estou entrando em contato pois gostaria de ajudar no caso
-    com o valor de 120`;
+  const { incident } = route.params;
+
+  const message = `Olá ${
+    incident.name
+  }, estou entrando em contato pois gostaria de ajudar no caso "${
+    incident.title
+  }" com o valor de ${Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(incident.value)}`;
 
   function navigateBack() {
     navigation.goBack();
@@ -19,15 +29,15 @@ export default function Detail() {
 
   function sendMail() {
     MailComposer.composeAsync({
-      subject: `Herói do caso: cadelina atropelada`,
-      recipients: ['rayk@com.br'],
+      subject: `Herói do caso: ${incident.title}`,
+      recipients: [incident.email],
       body: message,
     });
   }
 
   function sendWhatsapp() {
     Linking.openURL(
-      `whatsapp://send?phone=5511985673409&text=${message}`
+      `whatsapp://send?phone=55${incident.whatsapp}&text=${message}`
     );
   }
 
@@ -37,22 +47,25 @@ export default function Detail() {
         <Image source={logoImg} />
 
         <TouchableOpacity onPress={navigateBack}>
-          <Feather name="arrow-left" size={28} color="#e82041" />
+          <Feather name="arrow-left" size={16} color="#e02041" />
         </TouchableOpacity>
       </View>
 
       <View style={styles.incident}>
         <Text style={[styles.incidentProperty, { marginTop: 0 }]}>ONG:</Text>
         <Text style={styles.incidentValue}>
-          APAD
+          {incident.name} de {incident.city}/{incident.uf}
         </Text>
 
         <Text style={styles.incidentProperty}>CASO:</Text>
-        <Text style={styles.incidentValue}>Cadelinha atropelada</Text>
+        <Text style={styles.incidentValue}>{incident.title}</Text>
 
         <Text style={styles.incidentProperty}>VALOR:</Text>
         <Text style={styles.incidentValue}>
-          R$ 120,00
+          {Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(incident.value)}
         </Text>
       </View>
 
@@ -72,7 +85,6 @@ export default function Detail() {
           </TouchableOpacity>
         </View>
       </View>
-
     </View>
   );
 }
